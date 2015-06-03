@@ -58,7 +58,7 @@ my $elim_list;
 # getting user specified options
 GetOptions ("bin=i" => \$bin,
             "window=i" => \$nuc_window,
-            "overlap=i" => \$overlap,
+            "nrl=i" => \$overlap,
             "add=i" => \$extend,
             "up=i" => \$up_limit,
             "start=i" => \$start_limit,

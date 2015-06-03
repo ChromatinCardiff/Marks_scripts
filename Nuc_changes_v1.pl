@@ -128,6 +128,7 @@ if ($ref_file !~ /^\.+/ && $ref_file =~ /\/([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A
         # if gradient parameter present in reference set, open files for gradient and occupancy
         my ($grad_out,$ref_grad_out,$occ_out,$ref_occ_out);
         if ( any { lc($_) eq 'grad' } @header  ) {
+            
             $outfile = "$cond\_vs_$ref_cond\_grad_changes.sgr";
             open ($grad_out, '>', "$outdir/$outfile") || die "Unable to open $outfile: $!\n";
             $outfile = "$cond\_vs_$ref_cond\_occ_changes.sgr";
@@ -142,11 +143,12 @@ if ($ref_file !~ /^\.+/ && $ref_file =~ /\/([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A
         # if size paramaters present in reference set, open files for size change
         my ($size_out,$ref_size_out);
         if ( any { lc($_) eq 'size' } @header ) {
+            
             $outfile = "$cond\_vs_$ref_cond\_size_changes.sgr";
-            open (my $size_out, '>', "$outdir/$outfile") || die "Unable to open $outfile: $!\n";
+            open ( $size_out, '>', "$outdir/$outfile") || die "Unable to open $outfile: $!\n";
             
             $outfile = "$ref_cond\_vs_$cond\_size_changes.sgr";
-            open (my $ref_size_out, '>', "$outdir/$outfile") || die "Unable to open $outfile: $!\n";
+            open ( $ref_size_out, '>', "$outdir/$outfile") || die "Unable to open $outfile: $!\n";
         }
         
         PEAK: while (<$test_in>) {
