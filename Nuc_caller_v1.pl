@@ -22,19 +22,22 @@ use Math::Round;
 use Cwd qw();
 use Getopt::Long;
 use File::Basename;
+use List::MoreUtils qw(any);
 
 ################################ Settings ################################
 
 # Default settings
 my $outdir = Cwd::cwd(); # current directory
 my $thresh = 10; # Peak calling threshold
-my $max_thresh = 100; # Maximum threshold over which peaks are ignored
+my $max_thresh = 200; # Maximum threshold over which peaks are ignored
 my $scale_factor = 1.0; # If want to scale for differences in read depth
+my $dual_bins = 2; # minimum number of bins between peaks
 
 # getting user specified options
 GetOptions ("thresh=i" => \$thresh,
             "max=i" => \$max_thresh,
             "scale=f" => \$scale_factor,
+            "dual=i" => \$dual_bins,
             "out=s" => \$outdir)
 or die("Error in command line arguments\n");
 
@@ -80,11 +83,7 @@ while(<$in>){
 # open output file
 open ( my $out, '>', "$outdir/$outfile" ) || die "Unable to open $outfile: $!";
 
-# this calls the peaks - giving an x-axis bin value ONLY for the peak centre and
-# a y-axis value as the peak hight scaled to some value proportionate to relative
-# read depth a relevant pair-wise comparison
-# DICTY SPECIFIC - this script uses a much stricter peak call in which the summit
-# bin must be higher than TWO surrounding bins. Some flat-tops are still called.
+## Peak Calling ##
 
 my ($peak_count);
 
@@ -111,15 +110,24 @@ for my $chrn (sort keys %freq) {
             ($freq{$chrn}[$count]*$scale_factor<=$max_thresh)){
             
             # check neighbouring bins haven't been called
-            if ($count==0 || $bin_tracker[$count-1] ne "null" || $bin_tracker[$count-2] ne "null") {
+            if ( $count == 0 ) {
+                
                 push(@bin_tracker,"null");
                 next LABEL;
-            } else {
-                # print to peaks file
-                push(@bin_tracker,$bins{$chrn}[$count]);
-                print($out "$chrn\t$bins{$chrn}[$count]\t".round(($freq{$chrn}[$count-1]+$freq{$chrn}[$count]+$freq{$chrn}[$count+1])*$scale_factor)."\n");
-                $peak_count++;
             }
+            
+            if ($dual_bins >= 1) {
+                if ( any { $bin_tracker[$count-$_] ne "null" } 1..$dual_bins ) {
+ 
+                    push(@bin_tracker,"null");
+                    next LABEL;
+                }
+            }
+            
+            # print to peaks file
+            push(@bin_tracker,$bins{$chrn}[$count]);
+            print($out "$chrn\t$bins{$chrn}[$count]\t".round(($freq{$chrn}[$count-1]+$freq{$chrn}[$count]+$freq{$chrn}[$count+1])*$scale_factor)."\n");
+            $peak_count++;
             
         } else {
             push(@bin_tracker,"null");

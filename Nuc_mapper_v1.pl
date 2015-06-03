@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # Written: Mark Robinson, April 2015
 # Last updated:
-# USAGE: Nuc_mapper_vn.pl
+# USAGE: Nuc_mapper_vn.pl SAMfile.sam
 #
 # Maps reads from SAM to genome, producing an .sgr histogram of dyad positions and also a histogram
 # of read lengths and alignment numbers.
@@ -52,7 +52,7 @@ print "Note: SAMparser output option turned on\n" if $SAMparser;
 print "Running in paired end mode\n" if $PE;
 print "Binning: $bin bp\n";
 
-if ( $SAMfile !~ /^\.+/ && $SAMfile =~ /\/([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}).*\.sam/) {
+if ( $SAMfile =~ /\/([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}).*\.sam/) {
     
     my $condition = $1;
     

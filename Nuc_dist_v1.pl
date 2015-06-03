@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 # Written: Mark Robinson, April 2015
 # Last updated:
-# USAGE: Nuc_dist_vn.pl
+# USAGE: perl --options Nuc_dist_vn.pl SGR_FILE PEAKS_FILE
 #
 # Script to measure how tightly nucleosomes are positioned accross the population.
 #
