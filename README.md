@@ -83,10 +83,10 @@ Creates a histogram of fragment sizes contributing to a given peak. Will define 
 NB: pretty slow since has to re-map from SAM file to get different fragment sizes
 
 Output: 
--Adds max/mode fragment size to peaks file
--C3 type file for clustering with a fragment profile for each individual peak. 
--A new .sgr file of mapped fragment sizes - to check in IGB or similar.
--2D and 3D profiles (2D = just fragment sizes, 3D =  position and frag size)
+*Adds max/mode fragment size to peaks file
+*C3 type file for clustering with a fragment profile for each individual peak. 
+*A new .sgr file of mapped fragment sizes - to check in IGB or similar.
+*2D and 3D profiles (2D = just fragment sizes, 3D =  position and frag size)
 
 Usage: perl Nuc_size_vn.pl --options SAMfile.sam peaksfile.sgr 
 
