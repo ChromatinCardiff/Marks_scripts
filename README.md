@@ -18,11 +18,11 @@ Using options - I used the perl Getopt::Long for command line options, which is 
 
 Simplified version of Nicks mapping method - just takes SAM file and converts straight to an .sgr histogram with a fragment size range of your choosing. Includes option to output SAMparser style files if needed for other Kent lab scripts. Will just plot any aligned reads in the SAM - so make sure your SAM only contains the alignments you want to contribute to the final dyad histogram! 
 
-Output: Dyad histogram file (.sgr).
+**Output:** Dyad histogram file (.sgr).
 
-Usage: perl Nuc_mapper_vn.pl --options SAMfile.sam
+**Usage:** perl Nuc_mapper_vn.pl --options SAMfile.sam
 
-Arguments:
+**Arguments:**
 
     --bin|-b = binning desired (default = 10bp)
     --min|-mi = minimum fragment length to include (after rounding to closest bin) (default = 120bp)
@@ -31,7 +31,7 @@ Arguments:
     --PE|-p = flag paired end reads (default = off)
     --out|-o = output directory (default = current working directory)
 
-Example: `Nuc_mapper_v1.pl --PE -mi 100 -ma 190 --bin 5 /path/WT_rep1_0H_aligned.sam`
+**Example:** `Nuc_mapper_v1.pl --PE -mi 100 -ma 190 --bin 5 /path/WT_rep1_0H_aligned.sam`
 
 ## Nuc_caller.pl
 
@@ -39,11 +39,11 @@ Basically just Nick's peak marker with a few changes: requires two bins either s
 
 NB: I usually smooth and then normalise all sgrs to same read-depth before doing peak calling but can be run on un-smoothed and use scaling factors if prefered.
 
-Output: Peak positions and height (.sgr).
+**Output:** Peak positions and height (.sgr).
 
-Usage: perl Nuc_caller_vn.pl --options dyad_histogram.sgr
+**Usage:** perl Nuc_caller_vn.pl --options dyad_histogram.sgr
 
-Arguments:
+**Arguments:**
 
     --thresh|-t = minimum dyad frequency for calling peaks (default = 10)
     --max|-m = maximum dyad frequency of peaks (default = 200)
@@ -51,7 +51,7 @@ Arguments:
     --dual|-d = minimum number of bins between called peaks (default = 2)
     --out|-o = output directory (default = current working directory)
 
-Example: `perl Nuc_caller_v1.pl -t 20 -m 1000 /path/WT_rep1_0H_120-180bp_histogram_10.sgr`
+**Example:** `perl Nuc_caller_v1.pl -t 20 -m 1000 /path/WT_rep1_0H_120-180bp_histogram_10.sgr`
 
 ## Nuc_dist.pl
 
@@ -61,11 +61,15 @@ I would reccommend using un-smoothed data so that distribution hasn't been alter
 
 NB: Input peaks file can be .txt or .sgr to allow use of modified peaks files.
 
-Output: A new peaks file with same format as input but with additional column containing gradient, and without excluded peaks (_grad.txt). Also outputs .sgr of overlapping peak locations for checking in IGB etc.
+**Output:** 
 
-Usage: perl Nuc_dist_vn.pl --options dyad_histogram.sgr peaks_file.sgr
+1. A new peaks file with same format as input but with additional column containing gradient, and without excluded peaks (_grad.txt). 
 
-Arguments: 
+2. An .sgr of overlapping peak locations for checking in IGB etc.
+
+**Usage:** perl Nuc_dist_vn.pl --options dyad_histogram.sgr peaks_file.sgr
+
+**Arguments:** 
 
     --bin|-b = binning (default = 10)
     --pwind|-p = peak window - bins either side of peak to sum dyads over (default = 5)
@@ -74,7 +78,7 @@ Arguments:
     --min|-m = minimum number sum of dyads within peak window to keep peak (default = 10)
     --out|-o = output directory (default = current working directory)
 
-Example: `perl Nuc_dist_v1.pl --pwind 10 -g 5 -e 50 /path/WT_rep1_0H_120-180bp_histogram_10.sgr /path/WT_rep1_0H_120-180bp_peaks_t10.sgr`
+**Example:** `perl Nuc_dist_v1.pl --pwind 10 -g 5 -e 50 /path/WT_rep1_0H_120-180bp_histogram_10.sgr /path/WT_rep1_0H_120-180bp_peaks_t10.sgr`
 
 ## Nuc_size.pl
 
@@ -82,7 +86,7 @@ Creates a histogram of fragment sizes contributing to a given peak. Will define 
 
 NB: pretty slow since has to re-map from SAM file to get different fragment sizes
 
-*Output:* 
+**Output:** 
 
 1. Adds max/mode fragment size to peaks file.
 
@@ -92,9 +96,9 @@ NB: pretty slow since has to re-map from SAM file to get different fragment size
 
 4. 2D and 3D profiles (2D = just fragment sizes, 3D =  position and frag size).
 
-*Usage:* perl Nuc_size_vn.pl --options SAMfile.sam peaksfile.sgr 
+**Usage:** perl Nuc_size_vn.pl --options SAMfile.sam peaksfile.sgr 
 
-*Arguments:*
+**Arguments:**
 
     --wind|-w = bp either side of peak to count as peak region (default = 50)
     --min|-mi = minimum fragment size to include (default = 100)
@@ -105,7 +109,7 @@ NB: pretty slow since has to re-map from SAM file to get different fragment size
     --PE|-p = flag paired end reads (default = off)
     --out|-o = output directory (default = current working directory)
 
-*Example:* `perl Nuc_size_v1.pl --a 1 --wind 75 WT_rep1_0H_aligned.sam WT_rep1_0H_120-180bp_peaks_t10.sgr`
+**Example:** `perl Nuc_size_v1.pl --a 1 --wind 75 WT_rep1_0H_aligned.sam WT_rep1_0H_120-180bp_peaks_t10.sgr`
 
 ## Nuc_changes
 
@@ -115,15 +119,17 @@ Will measure whatever is present in peaks file - e.g. if just use unmodified pea
 
 NB: Default settings were set as ~5x SD of the changes observed between Dicty WT conditions - I'd reccommend running this with WT reps first and determining appropriate thresholds.
 
-Output: 
--One .sgr file for each change present in provided peaks file
-    -Units for changes: pos and size = bp, grad, height and occ = log2 fold change
-    -Occupancy change = peaks with height change AND no gradient change
--Info file
+**Output:** 
 
-Usage: perl Nuc_changes_vn.pl reference_peaks_file.txt test_peaks_file.txt
+1. One .sgr file for each change present in provided peaks file
+        -Units for changes: pos and size = bp, grad, height and occ = log2 fold change
+        -Occupancy change = peaks with height change AND no gradient change
 
-Arguments:
+2. Info file
+
+**Usage:** perl Nuc_changes_vn.pl reference_peaks_file.txt test_peaks_file.txt
+
+**Arguments:**
 
     --bin|-b = binning (default = 10)
     --common|-c = bp window either side of peak to look for common peaks between conditions (default = 40)
@@ -133,7 +139,7 @@ Arguments:
     --height|-h = fold height change threshold for calling peaks with altered height (default = 1.3)
     --out|-o = output directory (default = current working directory)
 
-Example: `perl Nuc_changes_v1.pl -p 25 -s 40 WT_rep1_ExpA_120-180bp_peaks_dist_size.txt Mutant_rep1_ExpA_120-180bp_peaks_dist_size.txt`
+**Example:** `perl Nuc_changes_v1.pl -p 25 -s 40 WT_rep1_ExpA_120-180bp_peaks_dist_size.txt Mutant_rep1_ExpA_120-180bp_peaks_dist_size.txt`
 
 ## Nuc_plotter
 
@@ -141,21 +147,29 @@ Maps identified peaks back to genes, and determines nucleosome order, before plo
 
 Also allows you to input peaks for elimination - the output will include the profile of total peaks then the profiles after eliminating each input elimination set. 
 
-Rules: This plotting method is a little complicated so to clarify exactly whats happening without you having to go through this ridiculous script...
-    -Uses half the number of nucleosomes mapped to that gene as a limit - e.g. if you set the number of nucleosomes plotted at the start of the gene to be 3 - a gene with 6+ nucleosomes will plot the first three, whereas a gene with 4 nucleosomes will only plot 2.
-    -Any nucleosomes not plotted as a defined position are added to the average (there are three averages - upstream av, mid av & downstream av) (e.g. if gene has 5 genes and set plotting of 3 from each end, will just plot 2 and add the middle nucleosome to mid average)
-    -Intergenic nucleosomes can be included multiple times - e.g. if a nucleosome is at the -1 of a downstream gene and TN+1 position of an upstream gene, it is included in the average profile of each position
-    -Peaks are plotted in a gene-relative orientation
-    -Will include all nucleosomes up to a specified distance from each gene as intergenic nucleosomes belonging to that gene, but won't go into coding regions.
+**Rules:** This plotting method is a little complicated so to clarify exactly whats happening without you having to go through this ridiculous script...
+    
+-Uses half the number of nucleosomes mapped to that gene as a limit - e.g. if you set the number of nucleosomes plotted at the start of the gene to be 3 - a gene with 6+ nucleosomes will plot the first three, whereas a gene with 4 nucleosomes will only plot 2.
+    
+-Any nucleosomes not plotted as a defined position are added to the average (there are three averages - upstream av, mid av & downstream av) (e.g. if gene has 5 genes and set plotting of 3 from each end, will just plot 2 and add the middle nucleosome to mid average)
+    
+-Intergenic nucleosomes can be included multiple times - e.g. if a nucleosome is at the -1 of a downstream gene and TN+1 position of an upstream gene, it is included in the average profile of each position
+    
+-Peaks are plotted in a gene-relative orientation
+   
+-Will include all nucleosomes up to a specified distance from each gene as intergenic nucleosomes belonging to that gene, but won't go into coding regions.
 
-Output:
-    -Average genic and intergenic nucleosome profiles along with confidence intervals
-    -Average nucleosome position profile including each specified position
-    -.sgr of determined peak position categories if you want to check you agree with called positions
+**Output:**
 
-Usage: perl Nuc_plotter_vn.pl dyad_histogram_file.sgr peaks_file.sgr gene_coord_file.txt
+1. Average genic and intergenic nucleosome profiles along with confidence intervals
 
-Arguments:
+2. Average nucleosome position profile including each specified position
+
+3. An .sgr of determined peak position categories if you want to check you agree with called positions
+
+**Usage:** perl Nuc_plotter_vn.pl dyad_histogram_file.sgr peaks_file.sgr gene_coord_file.txt
+
+**Arguments:**
     
     --bin|-b = binning (default 10)
     --window|-w = bp either side of peak to plot (default = 50)
