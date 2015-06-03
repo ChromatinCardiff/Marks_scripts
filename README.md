@@ -82,15 +82,15 @@ Creates a histogram of fragment sizes contributing to a given peak. Will define 
 
 NB: pretty slow since has to re-map from SAM file to get different fragment sizes
 
-Output: 
-*Adds max/mode fragment size to peaks file
-*C3 type file for clustering with a fragment profile for each individual peak. 
-*A new .sgr file of mapped fragment sizes - to check in IGB or similar.
-*2D and 3D profiles (2D = just fragment sizes, 3D =  position and frag size)
+*Output:* 
+1. Adds max/mode fragment size to peaks file
+2. C3 type file for clustering with a fragment profile for each individual peak. 
+3. A new .sgr file of mapped fragment sizes - to check in IGB or similar.
+4. 2D and 3D profiles (2D = just fragment sizes, 3D =  position and frag size)
 
-Usage: perl Nuc_size_vn.pl --options SAMfile.sam peaksfile.sgr 
+*Usage:* perl Nuc_size_vn.pl --options SAMfile.sam peaksfile.sgr 
 
-Arguments:
+*Arguments:*
 
     --wind|-w = bp either side of peak to count as peak region (default = 50)
     --min|-mi = minimum fragment size to include (default = 100)
@@ -101,7 +101,7 @@ Arguments:
     --PE|-p = flag paired end reads (default = off)
     --out|-o = output directory (default = current working directory)
 
-Example: `perl Nuc_size_v1.pl --a 1 --wind 75 WT_rep1_0H_aligned.sam WT_rep1_0H_120-180bp_peaks_t10.sgr`
+*Example:* `perl Nuc_size_v1.pl --a 1 --wind 75 WT_rep1_0H_aligned.sam WT_rep1_0H_120-180bp_peaks_t10.sgr`
 
 ## Nuc_changes
 
