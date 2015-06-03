@@ -69,7 +69,7 @@ if ( $SAMfile =~ /\/([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}).*\.sam/
         # Initialise chromosome sizes from header
         if ($_ =~ /^@/) {
             my @header = split('\t');
-            if ($header[1] =~ /^SN:(chr[\dFMRB]+)/) {
+            if ($header[1] =~ /^SN:(chr[\dFMRIVXB]+)/) {
                 my $chrn = $1;
                 if ($header[2] =~ /^LN:(\d+)/) {
                     my $length = ceil($1/$bin);
