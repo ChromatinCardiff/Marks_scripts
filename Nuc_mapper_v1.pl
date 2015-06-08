@@ -172,7 +172,7 @@ if ( $SAMfile =~ /\/([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}).*\.sam/
             my $filename = "$chrn\_1_$min_size\-$max_size"."bp_$condition\_SAMparser.txt";
             open (my $sam_out, '>', "$outdir/$filename") || die "Unable to open $filename: $!\n";
             
-            for (0..$#{$SAMparser_hash{$chrn}}) {
+            for (0..$#{$SAMparser_hash{$chrn}{"Start"}}) {
                 
                 my ($start,$frag,$pos) = ($SAMparser_hash{$chrn}{"Start"},$SAMparser_hash{$chrn}{"Frag"},$SAMparser_hash{$chrn}{"Pos"});
                 print ($sam_out "$chrn\t$start\t$frag\t$pos\n");
