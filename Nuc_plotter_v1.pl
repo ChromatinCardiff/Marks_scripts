@@ -213,8 +213,8 @@ if ( $sgr_filename =~ /^(([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10})_[A
     my ($peaks_filename, $peaks_dir, $peaks_suffix) = fileparse($peaks_file,@suffixes);
     die "Error: $peaks_filename should be either a .txt or .sgr file\n" unless ($peaks_suffix);
         
-    if ($peaks_filename =~ /$condition.*/) {
-        
+#    if ($peaks_filename =~ /$condition.*/) {
+    
         print "Found and processing peaks from $peaks_filename\n";
         
         print ($info_out "Peaks file used: $peaks_filename\n");
@@ -247,11 +247,11 @@ if ( $sgr_filename =~ /^(([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10})_[A
             }	
         }
     
-    } else {
-        
-        die "Error: Peaks file doesn't appear to match .sgr - check file names\n";
-    
-    }
+#    } else {
+#        
+#        die "Error: Peaks file doesn't appear to match .sgr - check file names\n";
+#    
+#    }
     
     ################################ Peak Mapping ################################
     

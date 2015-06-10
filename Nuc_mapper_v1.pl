@@ -174,7 +174,7 @@ if ( $SAMfile =~ /\/([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}).*\.sam/
             
             for (0..$#{$SAMparser_hash{$chrn}{"Start"}}) {
                 
-                my ($start,$frag,$pos) = ($SAMparser_hash{$chrn}{"Start"},$SAMparser_hash{$chrn}{"Frag"},$SAMparser_hash{$chrn}{"Pos"});
+                my ($start,$frag,$pos) = ($SAMparser_hash{$chrn}{"Start"}[$_],$SAMparser_hash{$chrn}{"Frag"}[$_],$SAMparser_hash{$chrn}{"Pos"}[$_]);
                 print ($sam_out "$chrn\t$start\t$frag\t$pos\n");
             
             }

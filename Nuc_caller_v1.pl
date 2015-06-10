@@ -51,7 +51,7 @@ print "Start: ".`date`."\n";
 print "Settings:\n";
 print "Scale factor set to: $scale_factor \n";
 print "Maximum threshold set to: $max_thresh\n";
-print "Threshold set to: $thresh \n";
+print "Minimum threshold set to: $thresh \n";
 
 # check file name
 my ($filename, $dir, $suffix) = fileparse($file,".sgr");
