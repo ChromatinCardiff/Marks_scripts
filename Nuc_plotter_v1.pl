@@ -53,7 +53,7 @@ my $start_limit = 3; # max number of nucleosomes downstream from TSS to plot
 my $end_limit = 2; # max number of nucleosomes upstream from TTS to plot
 my $down_limit = 1; # max number of nucleosomes downstream from TTS to plot
 my $CI = 95; # % for confidence intervals (choose from 90, 95 or 99)
-my $elim_list;
+my ($elim_list,$help);
 
 # getting user specified options
 GetOptions ("bin=i" => \$bin,
@@ -65,16 +65,33 @@ GetOptions ("bin=i" => \$bin,
             "end=i" => \$end_limit,
             "down=i" => \$down_limit,
             "ci=i" => \$CI,
-            "elim=s" => \$elim_list,
+            "help" => \$help,
             "out=s" => \$outdir)
 or die("Error in command line arguments\n");
 
-# get files from command line
-my $sgr_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SGR_FILE PEAKS_FILE COORD_FILE ELIM_FILES(optional)\n";
-my $peaks_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SGR_FILE PEAKS_FILE COORD_FILE ELIM_FILES(optional)\n";
-my $coord_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SGR_FILE PEAKS_FILE COORD_FILE ELIM_FILES(optional)\n";
+my $help_string = "\nUsage: $0 -options sgr_file peaks_file coord_file elim_files(optional)\nOptional settings:\n";
+$help_string.="--bin|-b = binning (default 10)\n";
+$help_string.="--window|-w = bp either side of peak to plot (default = 50)\n";
+$help_string.="--nrl|-n = minimum distace between peaks (default = off)\n";
+$help_string.="--add|-a = bp distance to extend into intergenic regions flanking gene for finding intergenic peaks belonging to a given gene (default = 1500)\n";
+$help_string.="--up|-u = number of nucleosomes to plot upstream of TSS/start boundary (default = 1)\n";
+$help_string.="--start|-s = number of nucleosomes to plot downstream of TSS/start boundary (default = 3)\n";
+$help_string.="--end|-en = number of nucleosomes to plot upstream of TTS/end boundary (default = 2)\n";
+$help_string.="--down|-d = number of nucleosomes to plot downstream of TTS/end boundary (default = 1)\n";
+$help_string.="--ci|-c = % confidence interval to calculate - (I only included crit values for 90%, 95% and 99% so choose one of those (or add it!)) (default = 95)\n";
+$help_string.="--out|-o = output directory (default = current working directory)\n";
 
-my @elim_files = split(",",$elim_list);
+if ($help) {
+    print $help_string;
+    exit;
+}
+
+# get files from command line
+my $sgr_file = shift(@ARGV) or die "Inusufficient arguments supplied $help_string";
+my $peaks_file = shift(@ARGV) or die "Inusufficient arguments supplied $help_string";
+my $coord_file = shift(@ARGV) or die "Inusufficient arguments supplied $help_string";
+
+my @elim_files = @ARGV;
 
 ################################ Main Program ################################
 

@@ -35,6 +35,7 @@ my $peak_window = 5; # bins either side of peak to sum dyads
 my $grad_window = 2; # which bins to calculate gradient over
 my $exclusion_window = 60; # minimum distance (bp) between peaks (set as '' if don't want to exclude overlapping)
 my $min_reads = 10; # minimum number of reads within window to count as peak
+my $help;
 
 # getting user specified options
 GetOptions ("bin=i" => \$bin,
@@ -42,12 +43,26 @@ GetOptions ("bin=i" => \$bin,
             "gwind=i" => \$grad_window,
             "ewind=i" => \$exclusion_window,
             "min=i" => \$min_reads,
+            "help" => \$help,
             "out=s" => \$outdir)
 or die("Error in command line arguments\n");
 
+my $help_string = "\nUsage: $0 -options sgr_file peaks_file\nOptional settings:\n";
+$help_string .= "--bin|-b = binning (default = 10)\n";
+$help_string .= "--pwind|-p = peak window - bins either side of peak to sum dyads over (default = 5)\n";
+$help_string .= "--gwind|-g = gradient window - bins around peak over which to measure gradient from summed dyads (default = 2)\n";
+$help_string .= "--ewind|-e = exclusion window - minimum distance between peaks (default = 60)\n";
+$help_string .= "--min|-m = minimum number sum of dyads within peak window to keep peak (default = 10)\n";
+$help_string .= "--out|-o = output directory (default = current working directory)\n";
+
+if ($help) {
+    print $help_string;
+    exit;
+}
+
 # get files from command line
-my $sgr_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SGR_FILE PEAKS_FILE\n";
-my $peaks_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SGR_FILE PEAKS_FILE\n";
+my $sgr_file = shift(@ARGV) or die "Inusufficient arguments supplied\n$help_string";
+my $peaks_file = shift(@ARGV) or die "Inusufficient arguments supplied\n$help_string";
 
 ################################ Main Program ################################
 

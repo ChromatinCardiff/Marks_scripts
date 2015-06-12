@@ -33,6 +33,7 @@ my $frag_bin = 5; # binning for fragment sizes
 my $pos_bin = 10; # binning for positions (should match peaks file)
 my $av_bin = ''; # optional higher resolution binning for 2d average, set to '' if want to save memory
 my $PE = ''; # whether data is paired ends or single (set to 1 for PE, or '' for SE)
+my $help;
 
 # getting user specified options
 GetOptions ("wind=i" => \$pos_window,
@@ -42,12 +43,25 @@ GetOptions ("wind=i" => \$pos_window,
             "pbin=i" => \$pos_bin,
             "abin=i" => \$av_bin,
             "PE" => \$PE,
+            "help" => \$help,
             "out=s" => \$outdir)
 or die("Error in command line arguments\n");
 
+my $help_string = "\nUsage: $0 -options SAM_file.sam peaks_file.txt\nOptional settings:\n";
+$help_string.="--wind|-w = bp either side of peak to count as peak region (default = 50)\n";
+$help_string.="--min|-mi = minimum fragment size to include (default = 100)\n";
+$help_string.="--max|-ma = maximum fragment size to include (default = 200)\n";
+$help_string.="--fbin|-f = binning for fragment sizes (default = 5)\n";
+$help_string.="--pbin|-p = binning for genomic position (default = 10)\n";
+$help_string.="--abin|-a = optional binning for the average 2D/3D profile so can set seperate binning for c3 and average if desired (default = off)\n";
+$help_string.="--PE|-p = flag paired end reads (default = off)\n";
+$help_string.="--out|-o = output directory (default = current working directory)\n\n";
+
+print $help_string if ($help);
+
 # get files from command line
-my $SAM_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SAM_FILE PEAKS_FILE\n";
-my $peaks_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SAM_FILE PEAKS_FILE\n";
+my $SAM_file = shift(@ARGV) or die "Inusufficient arguments supplied\n$help_string";
+my $peaks_file = shift(@ARGV) or die "Inusufficient arguments supplied\n$help_string\n";
 
 ################################ Main Program ################################
 

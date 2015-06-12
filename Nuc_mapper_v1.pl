@@ -31,6 +31,7 @@ my $max_size = 180; # maximum read length to map
 my $SAMparser = ''; # if SAMparser format files required set as 1, else set as ''
 my $PE = ''; # if data is paired end sequenced - set as 1, else set as ''
 my $outdir = Cwd::cwd();
+my $help;
 
 # getting user specified options
 GetOptions ("bin=i" => \$bin,
@@ -38,11 +39,22 @@ GetOptions ("bin=i" => \$bin,
             "max=i"   => \$max_size,
             "SAMparser"  => \$SAMparser,
             "PE" => \$PE,
+            "help" => \$help,
             "out=s" => \$outdir)
 or die("Error in command line arguments\n");
 
+my $help_string = "\nUsage: $0 -options path/SAM_file.sam\nOptional settings:\n";
+$help_string.="--bin|-b = binning desired (default = 10bp)\n";
+$help_string.="--min|-mi = minimum fragment length to include (after rounding to closest bin) (default = 120bp)\n";
+$help_string.="--max|-ma = maximum fragment length to include (after rounding to closest bin) (default = 180bp)\n";
+$help_string.="--SAMparser|-s = flag SAMparser style output on (default = off)\n";
+$help_string.="--PE|-p = flag paired end reads (default = off)\n";
+$help_string.="--out|-o = output directory (default = current working directory)\n\n";
+
+print $help_string if ($help);
+
 # getting command line file names
-my $SAMfile = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options SAMfile.sam\n";
+my $SAMfile = shift(@ARGV) or die "Inusufficient arguments supplied\n$help_string";
 
 ################################ Main Program ################################
 

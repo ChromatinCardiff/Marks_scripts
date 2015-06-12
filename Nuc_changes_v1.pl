@@ -33,6 +33,7 @@ my $size_thresh = 20; # threshold over which peaks are considered to have altere
 my $grad_thresh = 1.1; # threshold over which peaks considered re-distributed (fold change)
 my $height_thresh = 1.3; # threshold over which peaks considered to have altered occupancy (fold change)
 my $outdir = Cwd::cwd();
+my $help;
 
 # getting user specified options
 GetOptions ("bin=i" => \$bin,
@@ -41,12 +42,27 @@ GetOptions ("bin=i" => \$bin,
             "size=i"  => \$size_thresh,
             "grad=f" => \$grad_thresh,
             "height=f" => \$height_thresh,
+            "help" => \$help,
             "out=s" => \$outdir)
 or die("Error in command line arguments\n");
 
+my $help_string = "\nUsage: $0 -options ref_file test_file\nOptional settings:\n";
+$help_string .= "--bin|-b = binning (default = 10)\n";
+$help_string .= "--common|-c = bp window either side of peak to look for common peaks between conditions (default = 40)\n";
+$help_string .= "--pos|-p = bp position change threshold for calling peaks with altered positioning (default = 10)\n";
+$help_string .= "--size|-s = bp size change threshold for calling peaks with altered fragment size (default = 20)\n";
+$help_string .= "--grad|-g = fold gradient change threshold for calling peaks with altered distribution (default = 1.1)\n";
+$help_string .= "--height|-h = fold height change threshold for calling peaks with altered height (default = 1.3)\n";
+$help_string .= "--out|-o = output directory (default = current working directory)\n";
+
+if ($help) {
+    print $help_string;
+    exit;
+}
+
 # get files from command line
-my $ref_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options ref_file test_file\n";
-my $test_file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options ref_file test_file\n";
+my $ref_file = shift(@ARGV) or die "Inusufficient arguments supplied $help_string";
+my $test_file = shift(@ARGV) or die "Inusufficient arguments supplied $help_string";
 
 ################################ Main Program ################################
 

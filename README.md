@@ -147,6 +147,12 @@ Maps identified peaks back to genes, and determines nucleosome order, before plo
 
 Also allows you to input peaks for elimination - the output will include the profile of total peaks then the profiles after eliminating each input elimination set. 
 
+**Input:**
+
+-Peaks for elimination should be in format from Nuc_changes.pl - i.e. basically just a peaks file but with `*_changename_changes.sgr` naming and a header with change name.
+
+-Coordinates file - you basically want to parse a GFF type file to get whatever genome locations you want but needs to have following format: "chrn\tstart\tend\tID\tstrandedness\n"
+
 **Rules:** This plotting method is a little complicated so to clarify exactly whats happening without you having to go through this ridiculous script...
     
 -Uses half the number of nucleosomes mapped to that gene as a limit - e.g. if you set the number of nucleosomes plotted at the start of the gene to be 3 - a gene with 6+ nucleosomes will plot the first three, whereas a gene with 4 nucleosomes will only plot 2.
@@ -167,7 +173,8 @@ Also allows you to input peaks for elimination - the output will include the pro
 
 3. An .sgr of determined peak position categories if you want to check you agree with called positions
 
-**Usage:** perl Nuc_plotter_vn.pl dyad_histogram_file.sgr peaks_file.sgr gene_coord_file.txt
+**Usage:** perl Nuc_plotter_vn.pl dyad_histogram_file.sgr peaks_file.sgr gene_coord_file.txt [elim_files.sgr (optional)]
+NB: for elimination files, just drag all change.sgr files wanted into the terminal window after other arguements or list (each file seperated by a space)
 
 **Arguments:**
     
@@ -180,5 +187,6 @@ Also allows you to input peaks for elimination - the output will include the pro
     --end|-en = number of nucleosomes to plot upstream of TTS/end boundary (default = 2)
     --down|-d = number of nucleosomes to plot downstream of TTS/end boundary (default = 1)
     --ci|-c = % confidence interval to calculate - (I only included crit values for 90%, 95% and 99% so choose one of those (or add it!)) (default = 95)
-    --elim|-el = comma seperate list of peaks to eliminate (default = off)
     --out|-o = output directory (default = current working directory)
+
+**Example:** `perl Nuc_plotter_v1.pl Mutant_rep1_expA_120-180bp_10.sgr Mutant_rep1_expA_120-180bp_peaks_t10.sgr gene_coordinates_2009.txt mutant_vs_WT_dist_changes.sgr mutant_vs_WT_occ_changes.sgr`

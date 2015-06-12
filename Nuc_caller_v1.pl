@@ -32,17 +32,33 @@ my $thresh = 10; # Peak calling threshold
 my $max_thresh = 200; # Maximum threshold over which peaks are ignored
 my $scale_factor = 1.0; # If want to scale for differences in read depth
 my $dual_bins = 2; # minimum number of bins between peaks
+my $help; # whether to print usage info
 
 # getting user specified options
 GetOptions ("thresh=i" => \$thresh,
             "max=i" => \$max_thresh,
             "scale=f" => \$scale_factor,
             "dual=i" => \$dual_bins,
+            "help" => \$help,
             "out=s" => \$outdir)
 or die("Error in command line arguments\n");
 
+my $help_string = "\nUsage: $0 -options path/file.sgr\nOptional settings:\n";
+$help_string.="--thresh|-t = minimum dyad frequency for calling peaks (default = 10)\n";
+$help_string.="--max|-m = maximum dyad frequency of peaks (default = 200)\n";
+$help_string.="--scale|-s = scaling factor (default = 1.0)\n";
+$help_string.="--dual|-d = minimum number of bins between called peaks (default = 2)\n";
+$help_string.="--out|-o = output directory (default = current working directory)\n";
+$help_string.="--help|-h = print help info (but then I guess you already knew that!)\n\n";
+
+# print help info in flagged
+if ($help) {
+    print $help_string;
+    exit;
+}
+
 # get files from command line
-my $file = shift(@ARGV) or die "Inusufficient arguments supplied - usage: $0 -options FILENAME\n";
+my $file = shift(@ARGV) or die "Inusufficient arguments supplied\n$help_string";
 
 ################################ Main Program ################################
 
