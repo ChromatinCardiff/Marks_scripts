@@ -35,7 +35,9 @@ Simplified version of Nicks mapping method - just takes SAM file and converts st
 
 ## Nuc_caller.pl
 
-Basically just Nick's peak marker with a few changes: requires two bins either side of central bin to have lower dyad frequency, has a maximum threshold as well as minimum, prevents dual peaks being called within n bins of each other. Output peak height is 3 bin sum around peak.
+Basically just Nick's peak marker with a few changes: requires two bins either side of central bin to have lower dyad frequency, has a maximum threshold as well as minimum, prevents dual peaks being called within n bins of each other. Output peak height is 3 bin sum around peak. 
+
+v2 edit: Added ability to measure distribution of peaks and treat disorganised regions as a single peak in order to avoid calling lots of false peaks in noisy regions. 
 
 NB: I usually smooth and then normalise all sgrs to same read-depth before doing peak calling but can be run on un-smoothed and use scaling factors if prefered.
 
@@ -49,6 +51,8 @@ NB: I usually smooth and then normalise all sgrs to same read-depth before doing
     --max|-m = maximum dyad frequency of peaks (default = 200)
     --scale|-s = scaling factor (default = 1.0)
     --dual|-d = minimum number of bins between called peaks (default = 2)
+    --grad|-g = minimum gradient threshold - below which peaks treated as a "disorganised region" rather than a single peak, only checks gradient if set (default = off)
+    --window|-w = window over which to calc gradient (default = 5)
     --out|-o = output directory (default = current working directory)
 
 **Example:** `perl Nuc_caller_v1.pl -t 20 -m 1000 /path/WT_rep1_0H_120-180bp_histogram_10.sgr`

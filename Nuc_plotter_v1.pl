@@ -184,7 +184,7 @@ if ( $sgr_filename =~ /^(([A-Za-z\d]{1,10}_[A-Za-z\d]{1,10}_[A-Za-z\d]{1,10})_[A
         
         die "Error: $elim_filename should be a .txt or .sgr file\n" unless ($elim_suffix);
         
-        if ($elim_filename =~ /^$small_cond.*_([a-zA-Z]{1,10})_changes/) {
+        if ($elim_filename =~ /^$small_cond.*_([a-zA-Z\-]{1,20})_changes/) {
             
             my $change = $1;
             
